@@ -1,0 +1,62 @@
+{
+    "scenario": {
+      "shape": [1, 1],
+      "origin": [0, 0],
+      "wrapped": false
+    },
+    "cells": {
+      "default": {
+        "delay": "inertial",
+        "model": "DengueCell",
+        "state": { "S": 0, "E": 0, "I": 0, "R": 0 },
+        "neighborhood": []
+      }
+    },
+    "viewer": [
+      {
+        "field": "S",
+        "breaks": [0, 500, 1000, 2000, 5000, 10000],
+        "colors": [
+          [255, 255, 224],  /* light yellow */
+          [144, 238, 144],  /* light green */
+          [0, 128, 0],      /* green */
+          [0, 100, 0],      /* dark green */
+          [0, 50, 0]        /* very dark green */
+        ]
+      },
+      {
+        "field": "E",
+        "breaks": [0, 10, 50, 100, 200, 500],
+        "colors": [
+          [255, 250, 205],  /* lemon chiffon */
+          [255, 215, 0],    /* gold */
+          [255, 165, 0],    /* orange */
+          [255, 69, 0],     /* orange red */
+          [139, 0, 0]       /* dark red */
+        ]
+      },
+      {
+        "field": "I",
+        "breaks": [0, 5, 20, 50, 100, 200],
+        "colors": [
+          [255, 228, 225],  /* misty rose */
+          [255, 182, 193],  /* light pink */
+          [255, 105, 180],  /* hot pink */
+          [255, 20, 147],   /* deep pink */
+          [139, 0, 139]     /* dark magenta */
+        ]
+      },
+      {
+        "field": "R",
+        "breaks": [0, 500, 1000, 2000, 5000, 10000],
+        "colors": [
+          [224, 255, 255],  /* light cyan */
+          [135, 206, 250],  /* light sky blue */
+          [30, 144, 255],   /* dodger blue */
+          [0, 0, 255],      /* blue */
+          [0, 0, 139]       /* dark blue */
+        ]
+      }
+    ]
+  }
+  
