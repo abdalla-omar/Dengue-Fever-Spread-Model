@@ -1,25 +1,24 @@
 {
-  "scenario": {
-    "shape":  [100],
-    "origin": [0],
-    "wrapped": false
-  },
   "cells": {
     "default": {
-      "model":      "DengueCell",
-      "delay":      "transport",
-      "config":     { "beta": 0.0001, "sigma": 0.2, "gamma": 0.1 },
-      "neighborhood": [
-        {
-          "type":      "relative",
-          "neighbors": [[1]],
-          "vicinity":  1.0
-        }
-      ]
+      "delay":   "inertial",
+      "model":   "DengueCell",
+      "state":   { "susceptible": 1000, "exposed": 0, "infectious": 0, "recovered": 0 },
+      "config":  { "beta": 0.0001, "sigma": 0.2, "gamma": 0.1, "population": 2000 }
     },
-    "hotspot": {
-      "state":    { "susceptible": 1000, "exposed": 10, "infectious": 0, "recovered": 0 },
-      "cell_map": [[10], [20], [30]]
+    "regionA": {
+      "state":       { "susceptible": 2000 },
+      "config":      { "population": 2000, "green_cover": 0.3 },
+      "neighborhood": { "regionA": 1.0, "regionB": 0.5, "regionC": 0.2 }
+    },
+    "regionB": {
+      "config":      { "population": 5000, "green_cover": 0.1 },
+      "neighborhood": { "regionA": 0.5, "regionB": 1.0, "regionC": 0.4 }
+    },
+    "regionC": {
+      "state":       { "infectious": 10 },
+      "config":      { "population": 3000, "green_cover": 0.6 },
+      "neighborhood": { "regionA": 0.2, "regionB": 0.4, "regionC": 1.0 }
     }
   }
 }

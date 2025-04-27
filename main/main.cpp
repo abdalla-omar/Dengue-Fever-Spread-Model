@@ -1,4 +1,4 @@
-#include <cadmium/modeling/celldevs/grid/coupled.hpp>   // grid coupled
+#include <cadmium/modeling/celldevs/asymm/coupled.hpp>
 #include <cadmium/simulation/logger/csv.hpp>
 #include <cadmium/simulation/root_coordinator.hpp>
 #include <nlohmann/json.hpp>
@@ -11,14 +11,13 @@ using namespace std;
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        cout << "Usage: " << argv[0]
-             << " dengue_config.json [simulation_time]\n";
+        cout<<"Usage: "<<argv[0]<<" dengue_config.json [sim_time]\n";
         return 1;
     }
-    string configFile = argv[1];
-    double simTime  = (argc > 2) ? stod(argv[2]) : 1000.0;
+    string cfg = argv[1];
+    double simTime = (argc>2)? stod(argv[2]) : 1000.0;
 
-    auto model = make_shared<DengueModel>("DengueSim", configFile);
+    auto model = make_shared<DengueModel>("DengueSim", cfg);
     model->buildModel();
 
     RootCoordinator root(model);
