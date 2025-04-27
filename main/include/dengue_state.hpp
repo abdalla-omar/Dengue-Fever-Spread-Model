@@ -6,8 +6,8 @@
 
 /// SEIR state: counts of Susceptible, Exposed, Infectious, Recovered.
 struct DengueState {
-    int S, E, I, R;
-    DengueState() : S(0), E(0), I(0), R(0) {}
+    double S, E, I, R;
+    DengueState() : S(0.0), E(0.0), I(0.0), R(0.0) {}
 };
 
 /// Two states are “!=” if any compartment differs.
