@@ -16,6 +16,7 @@ set(CADMIUM_DIR "$ENV{CADMIUM}")
 # 3) Header search paths
 target_include_directories(${PROJECT_NAME} PUBLIC
   "${CMAKE_CURRENT_SOURCE_DIR}/main/include"  # your headers
+  "${CMAKE_CURRENT_SOURCE_DIR}/include"       # your headers
   "${CADMIUM_DIR}/include"               # Cadmium headers
 )
 

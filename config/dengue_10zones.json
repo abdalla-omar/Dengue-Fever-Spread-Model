@@ -1,0 +1,210 @@
+{
+    "cells": {
+      "default": {
+        "delay": "inertial",
+        "model": "DengueCell",
+        "state": { "S": 0, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1000,
+          "green_index":   0.3,
+          "breeding_rate": 0.5,
+          "fogging":       { "active": false, "efficacy": 0.0 },
+          "seasonality":   { "amplitude": 0.2, "phase": 0.0 }
+        }
+      },
+  
+      "zone1": {
+        "state": { "S": 1500, "E": 0, "I": 5, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1500,
+          "green_index":   0.4,
+          "breeding_rate": 0.6,
+          "fogging":       { "active": true,  "efficacy": 0.5 },
+          "seasonality":   { "amplitude": 0.3, "phase": 0.0 }
+        },
+        "neighborhood": {
+          "zone1":  1.0,
+          "zone2":  0.2,
+          "zone10": 0.2
+        }
+      },
+  
+      "zone2": {
+        "state": { "S": 1200, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1200,
+          "green_index":   0.3,
+          "breeding_rate": 0.4,
+          "fogging":       { "active": false, "efficacy": 0.0 },
+          "seasonality":   { "amplitude": 0.25, "phase": 1.0 }
+        },
+        "neighborhood": {
+          "zone1": 0.2,
+          "zone2": 1.0,
+          "zone3": 0.2
+        }
+      },
+  
+      "zone3": {
+        "state": { "S": 1800, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1800,
+          "green_index":   0.2,
+          "breeding_rate": 0.5,
+          "fogging":       { "active": false, "efficacy": 0.0 },
+          "seasonality":   { "amplitude": 0.2, "phase": 2.0 }
+        },
+        "neighborhood": {
+          "zone2": 0.2,
+          "zone3": 1.0,
+          "zone4": 0.2
+        }
+      },
+  
+      "zone4": {
+        "state": { "S": 1300, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1300,
+          "green_index":   0.5,
+          "breeding_rate": 0.7,
+          "fogging":       { "active": true,  "efficacy": 0.6 },
+          "seasonality":   { "amplitude": 0.4, "phase": 0.5 }
+        },
+        "neighborhood": {
+          "zone3": 0.2,
+          "zone4": 1.0,
+          "zone5": 0.2
+        }
+      },
+  
+      "zone5": {
+        "state": { "S": 1600, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1600,
+          "green_index":   0.35,
+          "breeding_rate": 0.55,
+          "fogging":       { "active": false, "efficacy": 0.0 },
+          "seasonality":   { "amplitude": 0.3, "phase": 1.5 }
+        },
+        "neighborhood": {
+          "zone4": 0.2,
+          "zone5": 1.0,
+          "zone6": 0.2
+        }
+      },
+  
+      "zone6": {
+        "state": { "S": 1400, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1400,
+          "green_index":   0.25,
+          "breeding_rate": 0.45,
+          "fogging":       { "active": true,  "efficacy": 0.4 },
+          "seasonality":   { "amplitude": 0.2, "phase": 2.5 }
+        },
+        "neighborhood": {
+          "zone5": 0.2,
+          "zone6": 1.0,
+          "zone7": 0.2
+        }
+      },
+  
+      "zone7": {
+        "state": { "S": 1700, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1700,
+          "green_index":   0.15,
+          "breeding_rate": 0.35,
+          "fogging":       { "active": false, "efficacy": 0.0 },
+          "seasonality":   { "amplitude": 0.25, "phase": 3.0 }
+        },
+        "neighborhood": {
+          "zone6": 0.2,
+          "zone7": 1.0,
+          "zone8": 0.2
+        }
+      },
+  
+      "zone8": {
+        "state": { "S": 1550, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1550,
+          "green_index":   0.5,
+          "breeding_rate": 0.8,
+          "fogging":       { "active": true,  "efficacy": 0.7 },
+          "seasonality":   { "amplitude": 0.4, "phase": 0.8 }
+        },
+        "neighborhood": {
+          "zone7": 0.2,
+          "zone8": 1.0,
+          "zone9": 0.2
+        }
+      },
+  
+      "zone9": {
+        "state": { "S": 1250, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1250,
+          "green_index":   0.3,
+          "breeding_rate": 0.5,
+          "fogging":       { "active": false, "efficacy": 0.0 },
+          "seasonality":   { "amplitude": 0.3, "phase": 1.2 }
+        },
+        "neighborhood": {
+          "zone8":  0.2,
+          "zone9":  1.0,
+          "zone10": 0.2
+        }
+      },
+  
+      "zone10": {
+        "state": { "S": 1350, "E": 0, "I": 0, "R": 0 },
+        "config": {
+          "beta":          0.0001,
+          "sigma":         0.2,
+          "gamma":         0.1,
+          "population":    1350,
+          "green_index":   0.4,
+          "breeding_rate": 0.6,
+          "fogging":       { "active": true,  "efficacy": 0.5 },
+          "seasonality":   { "amplitude": 0.35, "phase": 0.4 }
+        },
+        "neighborhood": {
+          "zone9":  0.2,
+          "zone10": 1.0,
+          "zone1":  0.2
+        }
+      }
+    }
+  }
+  

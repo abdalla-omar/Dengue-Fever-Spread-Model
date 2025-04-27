@@ -2,64 +2,58 @@
 #define DENGUE_CELL_HPP
 
 #include <cadmium/modeling/celldevs/asymm/cell.hpp>
-#include <nlohmann/json.hpp>
-#include <iostream>
+#include "dengue_state.hpp"
+#include <cmath>
 
 using namespace cadmium::celldevs;
-using namespace std;
 
-// Your SEIR + any vector fields
-struct DengueState {
-    double susceptible{0}, exposed{0}, infectious{0}, recovered{0};
-};
-
-// Logging & comparison
-inline ostream& operator<<(ostream& os, DengueState const& s) {
-    return os << "<S="<<s.susceptible
-              <<",E="<<s.exposed
-              <<",I="<<s.infectious
-              <<",R="<<s.recovered<<">";
-}
-inline bool operator!=(DengueState const& a, DengueState const& b) {
-    return a.susceptible!=b.susceptible
-        || a.exposed   !=b.exposed
-        || a.infectious!=b.infectious
-        || a.recovered !=b.recovered;
-}
-
-// JSON→state
-inline void from_json(nlohmann::json const& j, DengueState& s) {
-    j.at("susceptible").get_to(s.susceptible);
-    j.at("exposed")    .get_to(s.exposed);
-    j.at("infectious") .get_to(s.infectious);
-    j.at("recovered")  .get_to(s.recovered);
-}
-
-// Your asymmetric cell: IDs are strings
-class DengueCell : public AsymmCell<DengueState,double> {
+/// A Dengue‐SEIR cell under the new AsymmCell API
+class DengueCell : public AsymmCell<DengueState, double> {
 public:
   DengueCell(const std::string& id,
-	const std::shared_ptr<const AsymmCellConfig<DengueState,double>>& cfg)
-: AsymmCell<DengueState,double>(id,cfg) {}
-
-
-  // exact override signature from AsymmCell:
-  [[nodiscard]] DengueState localComputation(
-    DengueState state,
-    const unordered_map<string,NeighborData<DengueState,double>>& nbrs,
-    const PortSet& x) const override
+             const std::shared_ptr<const AsymmCellConfig<DengueState,double>>& config)
+    : AsymmCell<DengueState,double>(id, config)
   {
-    // TODO: compute new SEIR using:
-    //   - state.* fields
-    //   - cfg->config["beta"],["sigma"],["gamma"]
-    //   - each neighbor's nbrs[neighborID].state->infectious * nbrs[neighborID].weight
+    // pull your parameters out of the JSON “config” block
+    config->rawCellConfig.at("beta").get_to(beta);
+    config->rawCellConfig.at("sigma").get_to(incubationRate);
+    config->rawCellConfig.at("gamma").get_to(recoveryRate);
+  }
+
+  // —— This exactly matches the pure-virtual in the base class:
+  DengueState localComputation(
+    DengueState state,
+    const std::unordered_map<std::string, NeighborData<DengueState,double>>& nb
+  ) const override {
+    // 1) force of infection from neighbors
+    double force = 0.0;
+    for (auto const& [nid, nd] : nb) {
+      force += nd.state->I * nd.vicinity;
+    }
+
+    // 2) transitions
+    int newE = std::min(state.S, int(beta * force));
+    int newI = int(incubationRate * state.E);
+    int newR = int(recoveryRate   * state.I);
+
+    state.S -= newE;
+    state.E += newE - newI;
+    state.I += newI - newR;
+    state.R += newR;
+
     return state;
   }
 
-  // same delay as your default
-  [[nodiscard]] double outputDelay(DengueState const&) const override {
+  // —— Also matches the signature in the base class:
+  double outputDelay(const DengueState&) const override {
+    // one day per update (or whatever time unit)
     return 1.0;
   }
+
+private:
+  double beta;             // transmission rate
+  double incubationRate;   // E→I
+  double recoveryRate;     // I→R
 };
 
 #endif // DENGUE_CELL_HPP
