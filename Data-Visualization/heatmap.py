@@ -269,7 +269,7 @@ def main():
         sim = load_sim_csv()
         pv = pivot_sim(sim)
         zones = load_zones()
-        make_animation(pv, zones, max_days=30)  # Adjust max_days to the desired number of days
+        make_animation(pv, zones, max_days=365)  # Adjust max_days to the desired number of days
         print("Visualization completed successfully!")
     except Exception as e:
         print(f"ERROR: {e}")

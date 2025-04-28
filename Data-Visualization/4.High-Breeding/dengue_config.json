@@ -3,210 +3,210 @@
     "default": {
       "delay": "inertial",
       "model": "DengueCell",
-      "state": { "S": 0, "E": 0, "I": 0, "R": 0 },
+      "state":   { "S": 0, "E": 0, "I": 0, "R": 0 },
       "config": {
-        "beta":          0.00005,
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    100000,
         "green_index":   0.40,
-        "breeding_rate": 0.50,
+        "breeding_rate": 0.80,
         "fogging":       { "active": false, "efficacy": 0.0 },
-        "seasonality":   { "amplitude": 0.30, "phase": 0.0 }
+        "seasonality":   { "amplitude": 0.3, "phase": 0.0 }
       }
     },
 
     "MarinaBay": {
-      "state": { "S": 60000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 60000,  "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    60000,
         "green_index":   0.15,
-        "breeding_rate": 0.12,
+        "breeding_rate": 0.42,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.25, "phase": 0.0 }
       },
       "neighborhood": {
-        "MarinaBay":  1.00,
-        "Orchard":    0.30,
-        "BukitMerah": 0.30,
-        "Geylang":    0.20
+        "MarinaBay": 1.0,
+        "Orchard":   0.3,
+        "BukitMerah":0.3,
+        "Geylang":   0.2
       }
     },
 
     "Orchard": {
-      "state": { "S": 30000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 30000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    30000,
         "green_index":   0.25,
-        "breeding_rate": 0.20,
+        "breeding_rate": 0.50,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.30, "phase": 0.63 }
       },
       "neighborhood": {
-        "Orchard":    1.00,
-        "MarinaBay":  0.30,
+        "Orchard":    1.0,
+        "MarinaBay":  0.3,
         "BukitMerah": 0.15,
         "AngMoKio":   0.15
       }
     },
 
     "BukitMerah": {
-      "state": { "S": 170000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 170000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    170000,
         "green_index":   0.35,
-        "breeding_rate": 0.28,
+        "breeding_rate": 0.58,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.32, "phase": 1.26 }
       },
       "neighborhood": {
-        "BukitMerah": 1.00,
-        "MarinaBay":  0.30,
+        "BukitMerah": 1.0,
+        "MarinaBay":  0.3,
         "Orchard":    0.15,
         "Geylang":    0.15
       }
     },
 
     "Geylang": {
-      "state": { "S": 100000, "E": 0, "I": 10, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 100000, "E": 0, "I": 10, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    100000,
         "green_index":   0.30,
-        "breeding_rate": 0.24,
+        "breeding_rate": 0.54,
         "fogging":       { "active": true,  "efficacy": 0.6 },
         "seasonality":   { "amplitude": 0.35, "phase": 1.88 }
       },
       "neighborhood": {
-        "Geylang":    1.00,
-        "BukitMerah": 0.20,
-        "PasirRis":   0.20,
+        "Geylang":    1.0,
+        "BukitMerah": 0.2,
+        "PasirRis":   0.2,
         "MarinaBay":  0.15
       }
     },
 
     "Tampines": {
-      "state": { "S": 240000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 240000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    240000,
         "green_index":   0.50,
-        "breeding_rate": 0.40,
+        "breeding_rate": 0.70,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.30, "phase": 2.51 }
       },
       "neighborhood": {
-        "Tampines":   1.00,
-        "PasirRis":   0.30,
-        "JurongEast": 0.15
+        "Tampines":  1.0,
+        "PasirRis":  0.3,
+        "JurongEast":0.15
       }
     },
 
     "JurongEast": {
-      "state": { "S": 180000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 180000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    180000,
         "green_index":   0.40,
-        "breeding_rate": 0.32,
+        "breeding_rate": 0.62,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.28, "phase": 3.14 }
       },
       "neighborhood": {
-        "JurongEast": 1.00,
-        "Woodlands":  0.30,
+        "JurongEast": 1.0,
+        "Woodlands":  0.3,
         "BukitMerah": 0.15
       }
     },
 
     "Woodlands": {
-      "state": { "S": 260000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 260000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    260000,
         "green_index":   0.65,
-        "breeding_rate": 0.52,
+        "breeding_rate": 0.82,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.30, "phase": 3.77 }
       },
       "neighborhood": {
-        "Woodlands": 1.00,
-        "Yishun":    0.30,
-        "JurongEast":0.15
+        "Woodlands":  1.0,
+        "Yishun":     0.3,
+        "JurongEast": 0.15
       }
     },
 
     "Yishun": {
-      "state": { "S": 230000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 230000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    230000,
         "green_index":   0.55,
-        "breeding_rate": 0.44,
+        "breeding_rate": 0.74,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.30, "phase": 4.40 }
       },
       "neighborhood": {
-        "Yishun":    1.00,
-        "Woodlands": 0.30,
-        "AngMoKio":  0.15
+        "Yishun":     1.0,
+        "Woodlands":  0.3,
+        "AngMoKio":   0.15
       }
     },
 
     "PasirRis": {
-      "state": { "S": 150000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 150000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    150000,
         "green_index":   0.60,
-        "breeding_rate": 0.48,
+        "breeding_rate": 0.78,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.32, "phase": 5.03 }
       },
       "neighborhood": {
-        "PasirRis":  1.00,
-        "Tampines":  0.30,
+        "PasirRis":  1.0,
+        "Tampines":  0.3,
         "Geylang":   0.15
       }
     },
 
     "AngMoKio": {
-      "state": { "S": 160000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 160000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    160000,
         "green_index":   0.45,
-        "breeding_rate": 0.36,
+        "breeding_rate": 0.66,
         "fogging":       { "active": false, "efficacy": 0.0 },
         "seasonality":   { "amplitude": 0.30, "phase": 5.65 }
       },
       "neighborhood": {
-        "AngMoKio": 1.00,
-        "Yishun":   0.30,
-        "Orchard":  0.15
+        "AngMoKio":  1.0,
+        "Yishun":    0.3,
+        "Orchard":   0.15
       }
     }
   }

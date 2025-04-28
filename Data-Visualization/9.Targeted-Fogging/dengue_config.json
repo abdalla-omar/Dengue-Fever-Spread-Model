@@ -3,9 +3,9 @@
     "default": {
       "delay": "inertial",
       "model": "DengueCell",
-      "state": { "S": 0, "E": 0, "I": 0, "R": 0 },
+      "state":   { "S": 0, "E": 0, "I": 0, "R": 0 },
       "config": {
-        "beta":          0.00005,
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    100000,
@@ -15,11 +15,10 @@
         "seasonality":   { "amplitude": 0.30, "phase": 0.0 }
       }
     },
-
     "MarinaBay": {
-      "state": { "S": 60000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 60000,  "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    60000,
@@ -35,11 +34,10 @@
         "Geylang":    0.20
       }
     },
-
     "Orchard": {
-      "state": { "S": 30000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 30000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    30000,
@@ -55,11 +53,10 @@
         "AngMoKio":   0.15
       }
     },
-
     "BukitMerah": {
-      "state": { "S": 170000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 170000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    170000,
@@ -75,17 +72,16 @@
         "Geylang":    0.15
       }
     },
-
     "Geylang": {
-      "state": { "S": 100000, "E": 0, "I": 10, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 100000, "E": 0, "I": 10, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    100000,
         "green_index":   0.30,
         "breeding_rate": 0.24,
-        "fogging":       { "active": true,  "efficacy": 0.6 },
+        "fogging":       { "active": true,  "efficacy": 0.8 },
         "seasonality":   { "amplitude": 0.35, "phase": 1.88 }
       },
       "neighborhood": {
@@ -95,17 +91,16 @@
         "MarinaBay":  0.15
       }
     },
-
     "Tampines": {
-      "state": { "S": 240000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 240000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    240000,
         "green_index":   0.50,
         "breeding_rate": 0.40,
-        "fogging":       { "active": false, "efficacy": 0.0 },
+        "fogging":       { "active": true,  "efficacy": 0.8 },
         "seasonality":   { "amplitude": 0.30, "phase": 2.51 }
       },
       "neighborhood": {
@@ -114,11 +109,10 @@
         "JurongEast": 0.15
       }
     },
-
     "JurongEast": {
-      "state": { "S": 180000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 180000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    180000,
@@ -133,11 +127,10 @@
         "BukitMerah": 0.15
       }
     },
-
     "Woodlands": {
-      "state": { "S": 260000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 260000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    260000,
@@ -152,11 +145,10 @@
         "JurongEast":0.15
       }
     },
-
     "Yishun": {
-      "state": { "S": 230000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 230000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    230000,
@@ -171,11 +163,10 @@
         "AngMoKio":  0.15
       }
     },
-
     "PasirRis": {
-      "state": { "S": 150000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 150000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    150000,
@@ -190,11 +181,10 @@
         "Geylang":   0.15
       }
     },
-
     "AngMoKio": {
-      "state": { "S": 160000, "E": 0, "I": 0, "R": 0 },
-      "config": {
-        "beta":          0.00005,
+      "state":   { "S": 160000, "E": 0, "I": 0, "R": 0 },
+      "config":  {
+        "beta":          0.0001,
         "sigma":         0.2,
         "gamma":         0.1,
         "population":    160000,
