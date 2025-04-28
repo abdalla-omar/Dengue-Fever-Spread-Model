@@ -1,3 +1,4 @@
+import re
 import os
 import pandas as pd
 import geopandas as gpd
@@ -30,7 +31,7 @@ ZONE_POP = {
 # 1) load & preprocess simulation CSV
 # -----------------------------------------------------------------------------
 def load_sim_csv(path=CSV_PATH):
-    df = pd.read_csv(path, sep=';')
+    df = pd.read_csv(path, sep=';', header=0, skiprows=[0])
     # drop all the outputNeighborhood rows:
     df = df[df['port_name'].fillna('') == '']
     # parse the "<S,E,I,R>" into separate columns:
@@ -57,20 +58,35 @@ def pivot_sim(sim):
 # -----------------------------------------------------------------------------
 # 3) load geojson and keep only our ten
 # -----------------------------------------------------------------------------
-def load_zones(path=GEOJSON_PATH):
-    gdf = gpd.read_file(path)
-    # assume the actual district name is stored in the geometry's properties under
-    # one of the fields. If your file uses 'PLN_AREA_N' inside the HTML of 'Description',
-    # you can extract it with a quick hack. For now let's assume there's a column
-    # 'PLN_AREA_N'—if not, adjust accordingly.
-    if 'PLN_AREA_N' not in gdf.columns:
-        # fallback: extract from the Description HTML:
-        gdf['PLN_AREA_N'] = gdf['properties'].apply(
-            lambda d: d.split("PLN_AREA_N</th> <td>")[1].split("</td>")[0]
-            if 'PLN_AREA_N' in d else None
-        )
-    keep = list(ZONE_POP.keys())
-    return gdf[gdf['PLN_AREA_N'].isin(keep)].set_index('PLN_AREA_N')
+
+def load_zones():
+    # 1) Read in the GeoJSON
+    gdf = gpd.read_file(GEOJSON_PATH)
+
+    # 2) If there’s already a PLN_AREA_N column, use it
+    if 'PLN_AREA_N' in gdf.columns:
+        gdf['zone'] = gdf['PLN_AREA_N']
+    else:
+        # 3) Otherwise, parse it out of the HTML blob in 'Description'
+        def extract_pln_area(desc):
+            # look for: <th>PLN_AREA_N</th><td>SOME NAME</td>
+            m = re.search(r"<th>\s*PLN_AREA_N\s*<\/th>\s*<td>\s*([^<]+?)\s*<\/td>", desc)
+            return m.group(1).strip() if m else None
+
+        if 'Description' not in gdf.columns:
+            raise KeyError("No 'PLN_AREA_N' column or 'Description' field to parse.")
+
+        gdf['zone'] = gdf['Description'].apply(extract_pln_area)
+
+    # 4) Drop any features we couldn’t parse
+    missing = gdf['zone'].isna()
+    if missing.any():
+        bad = gdf.loc[missing, 'Name'].tolist()
+        raise ValueError(f"Couldn't extract PLN_AREA_N from these features: {bad}")
+
+    # 5) Return a GeoSeries indexed by your zone names
+    zones = gdf.set_index('zone')['geometry']
+    return zones
 
 # -----------------------------------------------------------------------------
 # 4) animate
@@ -83,7 +99,123 @@ def make_animation(pv, zones_gdf):
     bins = pv.values.flatten()
     breaks = pd.qcut(bins, q=5, retbins=True, labels=False)[1]
 
-    def update(i):
+    def update(i):#!/usr/bin/env python3
+import os
+import re
+
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# ─── CONFIG ────────────────────────────────────────────────────────────────────
+# Assumes this script lives in "Data Visualization/heatmap.py"
+HERE = os.path.dirname(__file__)
+PROJECT_ROOT = os.path.abspath(os.path.join(HERE, ".."))
+CSV_PATH     = os.path.join(PROJECT_ROOT, "dengue_log.csv")
+GEOJSON_PATH = os.path.join(HERE, "sg_zones.geojson")
+OUTPUT_GIF   = os.path.join(HERE, "dengue_spread.gif")
+
+# hard‐coded populations for our ten zones
+ZONE_POP = {
+    "Woodlands": 260000,
+    "Ang Mo Kio": 160000,
+    "Bukit Merah": 170000,
+    "Geylang":    100000,
+    "Tampines":   240000,
+    "Jurong East":180000,
+    "Orchard":     30000,
+    "Marina Bay":  60000,
+    "Pasir Ris":  150000,
+    "Yishun":     230000,
+}
+
+# ─── SIMULATION CSV LOADER ─────────────────────────────────────────────────────
+def load_sim_csv():
+    # skip the first “sep=;” line
+    df = pd.read_csv(CSV_PATH, sep=";", skiprows=1)
+    # drop all the neighborhood‐broadcast rows
+    if "port_name" in df.columns:
+        df = df[df["port_name"].fillna("") == ""]
+    # parse "<S,E,I,R>" into four columns
+    def _parse(s):
+        vals = s.strip("<>").split(",")
+        return [float(v) for v in vals]
+    comps = df["data"].apply(_parse).tolist()
+    comps_df = pd.DataFrame(comps, columns=["S","E","I","R"], index=df.index)
+    return pd.concat([df, comps_df], axis=1)
+
+def preprocess_sim(df):
+    # we only need time, model_name (our zone), and I
+    return df[["time","model_name","I"]].rename(columns={"model_name":"zone"})
+
+def pivot_sim(df):
+    # index=time, columns=zone, values=I
+    return df.pivot(index="time", columns="zone", values="I")
+
+# ─── ZONES GEOJSON LOADER ─────────────────────────────────────────────────────
+def load_zones():
+    gdf = gpd.read_file(GEOJSON_PATH)
+    # try to use a direct field, else extract from the Description HTML
+    if "PLN_AREA_N" not in gdf.columns:
+        def _extract(desc):
+            m = re.search(r"<th>PLN_AREA_N<\/th>\s*<td>([^<]+)<", desc)
+            return m.group(1).strip() if m else None
+        gdf["PLN_AREA_N"] = gdf["Description"].apply(_extract)
+    # re‐index by the planning‐area name
+    return gdf.set_index("PLN_AREA_N")
+
+# ─── ANIMATION BUILDER ─────────────────────────────────────────────────────────
+def make_animation(i_pivot, zones_gdf):
+    # convert to per-100 k
+    per100k = i_pivot.copy()
+    for zone in per100k.columns:
+        pop = ZONE_POP.get(zone)
+        if pop is None:
+            raise ValueError(f"Population missing for zone {zone!r}")
+        per100k[zone] = per100k[zone] / pop * 100_000
+
+    # determine color scale limits
+    vmin = 0
+    vmax = per100k.quantile(0.95).max()
+
+    fig, ax = plt.subplots(figsize=(6,6))
+    times = sorted(per100k.index)
+
+    def update(t):
+        ax.clear()
+        # grab the series of I_per100k at time t
+        ser = per100k.loc[t].rename("I_per100k")
+        # join onto our GeoDataFrame
+        plot_gdf = zones_gdf.join(ser)
+        plot_gdf = plot_gdf.dropna(subset=["I_per100k"])
+        plot_gdf.plot(
+            column="I_per100k",
+            cmap="OrRd",
+            linewidth=0.5,
+            edgecolor="gray",
+            vmin=vmin, vmax=vmax,
+            ax=ax
+        )
+        ax.set_title(f"Dengue I per 100k — Day {t}")
+        ax.axis("off")
+
+    anim = FuncAnimation(fig, update, frames=times, interval=200)
+    anim.save(OUTPUT_GIF, writer="imagemagick")
+    print(f"Saved animation → {OUTPUT_GIF}")
+
+# ─── MAIN ───────────────────────────────────────────────────────────────────────
+def main():
+    sim = load_sim_csv()
+    sim = preprocess_sim(sim)
+    pivot = pivot_sim(sim)
+
+    zones = load_zones()
+    make_animation(pivot, zones)
+
+if __name__ == "__main__":
+    main()
+
         ax.clear()
         t = times[i]
         zones_gdf['I_per100k'] = pv.loc[t]
